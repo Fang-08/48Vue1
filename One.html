@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style type="text/css">
+        *{margin:0px; padding:0px;}
+        body{font-size:14px;}
+        #app{width:1000px; margin:10px auto;}
+        #bigImg{float:left; margin-right:10px; width: 250px; height: 250px;}
+        .item{
+            width:340px;
+            line-height:30px;
+            box-sizing: border-box;
+            background:#f7f7f7;
+            border:1px solid #f7f7f7;
+            margin:10px 0px;
+            float:left;
+        }
+        #a {width: 700px; float: right;}
+        #a ul li{list-style: none; margin-top:10px;}
+        #a ul li p img{vertical-align:middle; margin-right:10px; width:45px;height: 45px;}
+        .select{ border:1px solid darkred;}
+    </style>
+</head>
+<body>
+<div id="app">
+    <div style="width: 250px;height: 250px; float: left;">
+    <img id="bigImg" :src="'img/'+n+'.jpg'" :class="{'select':current==index}">
+    </div>
+
+    <div id="a">
+        <p>颜色选择</p>
+        <ul>
+            <li v-for="(item,index) in fans" :key="index" @click="doClick(index)" :class="{'select':current==index}">
+                <p><img :src="item.imgUrl">{{item.desc}}</p></li>
+        </ul>
+    </div>
+</div>
+<script>
+    new Vue({
+        el:'#app',
+        data(){
+            return{
+                fans:[{desc:"白色【三档强劲风力-升级静音版】带底座",imgUrl:'img/1.jpg'},
+                      {desc:"粉色【三档强劲风力-升级静音版】带底座",imgUrl:'img/2.jpg'},
+                      {desc:"灰色【三档强劲风力-升级静音版】带底座",imgUrl:'img/3.jpg'},
+                      {desc:"蓝色【三档强劲风力-升级静音版】带底座",imgUrl:'img/4.jpg'},
+                ],
+                current:1,
+
+            }
+        },
+        methods:{
+            doClick(index){
+                this.current=index;
+                this.n=index+1;
+            }
+
+
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="demo2">
+    <table>
+        <tr>
+            <td>商品序号</td>
+            <td>商品编号</td>
+            <td>商品名称</td>
+            <td>商品数量</td>
+            <td>商品单价</td>
+            <td>商品功能</td>
+        </tr>
+        <tr v-for="(item,index) in list" :key="index">
+            <td>{{index+1}}</td>
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td>
+
+                <button @click="num_min(index)">-</button>
+                <input type="text" v-model="item.count">
+                <button @click="num_add(index)">+</button>
+            </td>
+            <td>{{item.price}}</td>
+            <td><button @click="del(index)">删除</button></td>
+        </tr>
+        <tr v-if="list.length>0">
+            <td>总价{{money}}元</td>
+        </tr>
+            <tr v-else>
+                <td>购物车中没有商品</td>
+            </tr>
+
+
+    </table>
+</div>
+<script>
+    new Vue({
+        el:'#demo2',
+        data() {
+            return {
+                //默认总价
+                money: 0,
+                chose:false,
+                list: [{id: '0001', name: 'iphoneX', count: 1, price: 6188},
+                    {id: '0002', name: '华为p30', count: 1, price: 5934},
+                    {id: '0003', name: '小米RedmiBook', count: 1, price: 4299},
+                    {id: '0004', name: '华为畅享9e', count: 1, price: 799}
+                ]
+            }
+        },
+        created: function() {
+            var money = 0;
+            var list = this.list;
+            for(var i = 0; i < list.length; i++) {
+                money += list[i].count * list[i].price;
+            }
+            this.money = money;
+            console.log(money);
+        },
+        methods: {
+            //计算总钱 ，一个可以调用的接口
+            hh: function() {
+                var money = 0;
+                var list = this.list;
+                for(var i = 0; i < list.length; i++) {
+                        money += list[i].count * list[i].price;
+                }
+                this.money = money;
+            },
+            //减少数量
+            num_min(index) {
+                var list = this.list;
+                var count = list[index].count;
+                if (count > 1) {
+                    count = count - 1;
+                    list[index].count = count;
+                }
+                this.hh();
+
+            },
+            //增加数量
+            num_add(index) {
+                var list = this.list;
+                var count = list[index].count;
+                count = count + 1;
+                list[index].count = count;
+                this.hh();
+            },
+            //删除列表
+            del(index) {
+                this.list.splice(index, 1);
+                this.hh();
+
+            },
+        }
+
+    })
+</script>
+</body>
+</html>
